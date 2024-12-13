@@ -1,15 +1,21 @@
 <launch>
 
-  <arg name="map_file" default="$(find magni_nav)/maps/blank_map.yaml"/>
+  <arg name="map_file" default="$(find magni_nav)/maps/simple_map.yaml"/>
 
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0.0 0 0  0 0 0  /map /odom 100" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0.0 0 0  0 0 0  /map /odom 100" /> -->
+
+  <node name="monte_carlo" pkg="amcl" type="amcl">
+    <param name="odom_alpha1" value="0.005"/>
+    <param name="odom_alpha2" value="0.005"/>
+    <param name="odom_alpha3" value="0.010"/>
+    <param name="odom_alpha4" value="0.005"/>
+    <param name="odom_alpha5" value="0.003"/>
+  </node>
 
 
-
-
-<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find magni_nav)/param/costmap_common_param.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find magni_nav)/param/costmap_common_param.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find magni_nav)/param/local_costmap_param.yaml" command="load" />

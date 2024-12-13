@@ -5,15 +5,15 @@
     $(find magni_description)/extrinsics/camera_extrinsics_$(arg camera_position).yaml
     so if that yaml file does not exsist, the xacro file will return "No such file or directory" error
     -->
-    <arg name="camera_position" default="forward"/> 
-    
+    <arg name="camera_position" default="forward"/>
+
     <!-- 
     This string will be taken to search for lidar extrinsics yaml file like 
     $(find magni_description)/extrinsics/lidar_extrinsics_$(arg lidar_position).yaml
     so if that yaml file does not exsist, the xacro file will return "No such file or directory" error
     -->
     <arg name="lidar_position" default="top_plate"/>
-    
+
     <!-- Weather the sonar sensors are installed on the robot -->
     <arg name="sonars_installed" default="true"/>
 
@@ -33,6 +33,7 @@
     <arg name="use_sim_time" default="true"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="/workspace/src/magni_robot/magni_gazebo/worlds/simple_world.world"/>
         <arg name="gui" value="$(arg gui)" />
         <arg name="headless" value="$(arg headless)" />
         <arg name="paused" value="$(arg paused)" />
@@ -54,7 +55,7 @@
 
     <!-- RViz to visualize robot state -->
     <arg unless="$(arg rviz_config)" name="rviz_args" value="" />
-    <arg     if="$(arg rviz_config)" name="rviz_args" value="-d $(find magni_gazebo)/launch/rviz_config.rviz" />
+    <arg if="$(arg rviz_config)" name="rviz_args" value="-d $(find magni_gazebo)/launch/rviz_config.rviz" />
 
     <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg rviz_args)" output="screen"/>
 

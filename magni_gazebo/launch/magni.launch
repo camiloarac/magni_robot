@@ -8,7 +8,7 @@
     Leave empty to disable
     -->
     <arg name="camera_position" default="forward"/>
-    
+
     <!-- 
     This string will be taken to search for lidar extrinsics yaml file like 
     $(find magni_description)/extrinsics/lidar_extrinsics_$(arg lidar_position).yaml
@@ -16,10 +16,10 @@
     Leave empty to disable
     -->
     <arg name="lidar_position" default="top_plate"/>
-    
+
     <!-- Weather the sonar sensors are installed on the robot -->
     <arg name="sonars_installed" default="true"/>
-    
+
     <!-- Weather the shell is installed on the robot -->
     <arg name="shell_installed" default="false"/>
 
@@ -37,8 +37,8 @@
         <arg name="lidar_extrinsics_file" value="$(arg lidar_extrinsics_file)" />
     </include>
 
-    <node name="magni_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model magni" />
-    
+    <node name="magni_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model magni -x 6.0 -y -2.0" />
+
     <!-- Load the parameters used by the following nodes -->
     <rosparam file="$(find magni_gazebo)/config/magni_controllers.yaml" command="load"/>
     <!-- Launch the roscontrol controllers needed -->

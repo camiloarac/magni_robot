@@ -5,7 +5,7 @@
         <param name="robot_front_length" value="0.1"/>
         <param name="robot_back_length" value="0.32"/>
 
-	<!-- lateral control -->
+        <!-- lateral control -->
         <param name="min_side_dist" value="0.3"/>
         <param name="max_side_dist" value="2"/>
         <param name="max_follow_dist_without_wall" value="1"/>
@@ -15,4 +15,16 @@
         <param name="lateral_ki" value="0.0"/>
         <param name="lateral_kd" value="60.0"/>
     </node>
+    <arg name="map_file" default="$(find magni_nav)/maps/simple_map.yaml"/>
+
+    <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+    <!-- <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0.0 0 0  0 0 0  /map /odom 100" /> -->
+    <node name="monte_carlo" pkg="amcl" type="amcl">
+        <param name="initial_pose_x" value="6.0" />
+        <param name="initial_pose_y" value="-2.0" />
+        <param name="odom_alpha1" value="0.4" />
+    </node>
+
+
 </launch>
